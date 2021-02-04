@@ -84,9 +84,14 @@ public class VendingMachineCLI {
 	public void displayItems() {      // static attribute used as method is not associated with specific object instance
 		// Code to display items in Vending Machine
 		// TODO: Create easy to read list.
+		System.out.printf("%-2s %-2s %-20s %-1s %-5s %-2s %-7s %-2s %-2s %-2s\n", 
+				"Slot", "|", "Name", "|", "Price", "|", "Type", "|", "Quantity", "|");
+		System.out.println("-------------------------------------------------------------");
 		for (Map.Entry<String, Item> item : this.vendingMachine.getItems().entrySet()) {
-			System.out.println(item.getValue().getName());
+			System.out.printf("%-4s %-2s %-20s %-1s %-5s %-2s %-7s %-2s %-8s %-2s\n", 
+					item.getKey(), "|", item.getValue().getName(), "|", "$" + item.getValue().getPrice(), "|", item.getValue().getType(), "|", item.getValue().getQuantity(), "|");
 		}
+		System.out.println("-------------------------------------------------------------");
 	}
 	
 	public void purchaseItems() {	 // static attribute used as method is not associated with specific object instance

@@ -2,9 +2,9 @@ package com.techelevator.Models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class VendingMachine {
 	// Attributes
@@ -31,7 +31,7 @@ public class VendingMachine {
 	// Constructor
 	public VendingMachine() throws FileNotFoundException {
 		this.balance = 0;
-		this.items = new HashMap<String, Item>();
+		this.items = new TreeMap<String, Item>();
 		// method that adds items to the map on program execution
 		run();
 	}
