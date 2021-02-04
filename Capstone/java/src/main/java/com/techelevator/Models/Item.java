@@ -78,4 +78,10 @@ public class Item {
 		
 		return "";
 	}
+
+	@Override
+	public String toString() {
+		return "Item [slot=" + slot + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", type="
+				+ type + "]";
+	}
 }

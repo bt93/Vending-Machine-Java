@@ -1,4 +1,9 @@
 package com.techelevator;
+import java.io.FileNotFoundException;
+import java.util.Map;
+
+import com.techelevator.Models.Item;
+import com.techelevator.Models.VendingMachine;
 /**************************************************************************************************************************
 *  This is your Vending Machine Command Line Interface (CLI) class
 *
@@ -25,9 +30,12 @@ public class VendingMachineCLI {
 													    };
 	
 	private Menu vendingMenu;              // Menu object to be used by an instance of this class
+	private VendingMachine vendingMachine;
 	
-	public VendingMachineCLI(Menu menu) {  // Constructor - user will pas a menu for this class to use
+	public VendingMachineCLI(Menu menu) throws FileNotFoundException {  // Constructor - user will pas a menu for this class to use
 		this.vendingMenu = menu;           // Make the Menu the user object passed, our Menu
+		
+		this.vendingMachine = new VendingMachine();
 	}
 	/**************************************************************************************************************************
 	*  VendingMachineCLI main processing loop
@@ -74,6 +82,10 @@ public class VendingMachineCLI {
  ********************************************************************************************************/
 	public void displayItems() {      // static attribute used as method is not associated with specific object instance
 		// Code to display items in Vending Machine
+		// TODO: Create easy to read list.
+		for (Map.Entry<String, Item> item : this.vendingMachine.getItems().entrySet()) {
+			System.out.println(item.getValue().getName());
+		}
 	}
 	
 	public void purchaseItems() {	 // static attribute used as method is not associated with specific object instance
