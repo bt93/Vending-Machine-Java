@@ -53,6 +53,7 @@ public class VendingMachineCLI {
 
 	public void run() {
 
+		this.header();
 		boolean shouldProcess = true;         // Loop control variable
 		
 		while(shouldProcess) {                // Loop until user indicates they want to exit
@@ -94,5 +95,23 @@ public class VendingMachineCLI {
 	
 	public void endMethodProcessing() { // static attribute used as method is not associated with specific object instance
 		// Any processing that needs to be done before method ends
+	}
+	
+	private void header() {
+		System.out.println(" _   _                _            ___  ___      _   _        _____ _____  _____ ");
+		System.out.println("| | | |              | |           |  \\/  |     | | (_)      |  _  |  _  ||  _  |");
+		System.out.println("| | | | ___ _ __   __| | ___ ______| .  . | __ _| |_ _  ___   \\ V /| |/' || |/' |");
+		System.out.println("| | | |/ _ \\ '_ \\ / _` |/ _ \\______| |\\/| |/ _` | __| |/ __|  / _ \\|  /| ||  /| |");
+		System.out.println("\\ \\_/ /  __/ | | | (_| | (_) |     | |  | | (_| | |_| | (__  | |_| \\ |_/ /\\ |_/ /");
+		System.out.println(" \\___/ \\___|_| |_|\\__,_|\\___/      \\_|  |_/\\__,_|\\__|_|\\___| \\_____/\\___/  \\___/ ");
+		System.out.println("                                                                                 ");
+		System.out.println("______         _   _           _              _ _         _____                  ");
+		System.out.println("| ___ \\       | | | |         | |            | | |       /  __ \\                 ");
+		System.out.println("| |_/ /_   _  | | | |_ __ ___ | |__  _ __ ___| | | __ _  | /  \\/ ___  _ __ _ __  ");
+		System.out.println("| ___ \\ | | | | | | | '_ ` _ \\| '_ \\| '__/ _ \\ | |/ _` | | |    / _ \\| '__| '_ \\ ");
+		System.out.println("| |_/ / |_| | | |_| | | | | | | |_) | | |  __/ | | (_| | | \\__/\\ (_) | |  | |_) |");
+		System.out.println("\\____/ \\__, |  \\___/|_| |_| |_|_.__/|_|  \\___|_|_|\\__,_|  \\____/\\___/|_|  | .__/ ");
+		System.out.println("        __/ |                                                             | |    ");
+		System.out.println("       |___/                                                              |_|    ");
 	}
 }
