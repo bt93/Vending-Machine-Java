@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,7 +36,7 @@ public class PurchaseMenu {
 		this.scanner = new Scanner(System.in);
 	}
 	
-	public void run() {
+	public void run() throws IOException {
 		System.out.println("Purchase Menu");
 		
 		boolean shouldProcess = true;
@@ -61,7 +62,7 @@ public class PurchaseMenu {
 		return;
 	}
 	
-	public void feedMoney() {
+	public void feedMoney() throws IOException {
 		boolean shouldProcess = true;
 		
 		while (shouldProcess) {
@@ -89,7 +90,7 @@ public class PurchaseMenu {
 		return;
 	}
 	
-	public void selectProduct() {
+	public void selectProduct() throws IOException {
 		boolean shouldProcess = true;
 		
 		while(shouldProcess) {
@@ -112,8 +113,11 @@ public class PurchaseMenu {
 		return;
 	}
 	
-	public void finishTransaction() {
-		
+	public void finishTransaction() throws IOException {
+		int[] change = this.vendingMachine.finishTransaction();
+		System.out.println();
+		System.out.println("Your change: " + change[0] + " Quarter(s), " + change[1] + " Dime(s) and " + change[2] + " Nickel(s).");
+		System.out.println("Thank you for using Vendo-Matic 800!");
 	}
 	
 	private void displayItems() {      // static attribute used as method is not associated with specific object instance

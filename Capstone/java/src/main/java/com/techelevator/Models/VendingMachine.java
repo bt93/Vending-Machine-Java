@@ -1,7 +1,14 @@
 package com.techelevator.Models;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -76,21 +83,25 @@ public class VendingMachine {
 	 * 
 	 * Takes $1, $2, $5 or $10
 	 */
-	public String feedMoney(double amount) {
+	public String feedMoney(double amount) throws IOException {
 		String message = "";
 		
 		if (amount == 1) {
 			this.balance += amount;
 			message = "$1 added.";
+			this.appendLog("FEED MONEY", amount);
 		} else if (amount == 2) {
 			this.balance += amount;
 			message = "$2 added.";
+			this.appendLog("FEED MONEY", amount);
 		} else if (amount == 5) {
 			this.balance += amount;
 			message = "$5 added.";
+			this.appendLog("FEED MONEY", amount);
 		} else if (amount == 10) {
 			this.balance += amount;
 			message = "$10 added.";
+			this.appendLog("FEED MONEY", amount);
 		} else {
 			message = "Only an amount of $1, $2, $5 or $10 can be added to the machine";
 		}
@@ -102,7 +113,7 @@ public class VendingMachine {
 	 * This method will give the user the item (Give Yum message)
 	 * Take out from balance and subtract from the stock
 	 */
-	public String purchaseItem(String slot) {
+	public String purchaseItem(String slot) throws IOException {
 		String message = "";
 		
 		Item chosenItem = this.items.get(slot.toUpperCase());
@@ -117,8 +128,53 @@ public class VendingMachine {
 			this.balance -= chosenItem.getPrice();
 			chosenItem.setQuantity(chosenItem.getQuantity() - 1);
 			message = "You have purchased: " + chosenItem.getName() + ". " + chosenItem.getPurchaseMessage();
+			this.appendLog(chosenItem.getName() + " " + chosenItem.getSlot(),  chosenItem.getPrice());
 		}
 		
 		return message;
+	}
+	
+	public int[] finishTransaction() throws IOException {
+		double originalBalance = this.balance;
+		double currentBalance = this.balance;
+		int[] change;
+		
+		int numberOfQuarters = (int)(currentBalance / .25);
+		currentBalance %= .25;
+		
+		int numberOfDimes = (int)(currentBalance / .10);
+		currentBalance %= .10;
+		
+		int numberOfNickels = (int)(currentBalance / .05);
+		currentBalance %= .05;
+		
+		this.balance = currentBalance;
+		change = new int[] { numberOfQuarters, numberOfDimes, numberOfNickels };
+		this.appendLog("GIVE CHANGE", originalBalance);
+		return change;
+	}
+	
+	private void appendLog(String transactionType, double amount) throws IOException {
+		DecimalFormat formatter = new DecimalFormat("#.00");
+		File log = new File("./Log.txt");
+		FileWriter fileWriter;
+		BufferedWriter bufferedWriter;
+		PrintWriter printWriter;
+		Timestamp timestampNow = Timestamp.valueOf(LocalDateTime.now());
+		
+		if (log.exists() && log.isFile()) {
+			fileWriter = new FileWriter(log, true);
+			bufferedWriter = new BufferedWriter(fileWriter);
+			printWriter = new PrintWriter(bufferedWriter);
+			printWriter.println(timestampNow + " " + transactionType + ": $" + formatter.format(amount) + " $" + formatter.format(this.balance));
+		} else {
+			log.createNewFile();
+			fileWriter = new FileWriter(log, false);
+			bufferedWriter = new BufferedWriter(fileWriter);
+			printWriter = new PrintWriter(bufferedWriter);
+			printWriter.println(timestampNow + " " + transactionType + ": $" + formatter.format(amount) + " $" + formatter.format(this.balance));
+		}
+		
+		printWriter.close();
 	}
 }

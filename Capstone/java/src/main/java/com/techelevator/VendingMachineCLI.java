@@ -1,5 +1,6 @@
 package com.techelevator;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -51,10 +52,11 @@ public class VendingMachineCLI {
 	*  should be coded
 	*
 	*  Methods should be defined following run() method and invoked from it
+	 * @throws IOException 
 	*
 	***************************************************************************************************************************/
 
-	public void run() {
+	public void run() throws IOException {
 
 		this.header();
 		boolean shouldProcess = true;         // Loop control variable
@@ -100,7 +102,7 @@ public class VendingMachineCLI {
 		System.out.println("-------------------------------------------------------------");
 	}
 	
-	public void purchaseItems() {	 // static attribute used as method is not associated with specific object instance
+	public void purchaseItems() throws IOException {	 // static attribute used as method is not associated with specific object instance
 		// Code to purchase items from Vending Machine
 		this.purchaseMenu.run();
 	}
