@@ -70,4 +70,55 @@ public class VendingMachine {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	/*
+	 * This method will take in money and add to the current balance
+	 * 
+	 * Takes $1, $2, $5 or $10
+	 */
+	public String feedMoney(double amount) {
+		String message = "";
+		
+		if (amount == 1) {
+			this.balance += amount;
+			message = "$1 added.";
+		} else if (amount == 2) {
+			this.balance += amount;
+			message = "$2 added.";
+		} else if (amount == 5) {
+			this.balance += amount;
+			message = "$5 added.";
+		} else if (amount == 10) {
+			this.balance += amount;
+			message = "$10 added.";
+		} else {
+			message = "Only an amount of $1, $2, $5 or $10 can be added to the machine";
+		}
+		
+		return message;
+	}
+	
+	/*
+	 * This method will give the user the item (Give Yum message)
+	 * Take out from balance and subtract from the stock
+	 */
+	public String purchaseItem(String slot) {
+		String message = "";
+		
+		Item chosenItem = this.items.get(slot.toUpperCase());
+		
+		if (chosenItem == null) {
+			message = "Incorect slot number. Choose from one of the numbers above.";
+		} else if (this.balance < chosenItem.getPrice()) {
+			message = "Not enough funds to purchase item! Please make sure you have added money.";
+		} else if (chosenItem.getQuantity() <= 0) {
+			message = "Sorry! " + chosenItem.getName() + " is sold out!";
+		} else {
+			this.balance -= chosenItem.getPrice();
+			chosenItem.setQuantity(chosenItem.getQuantity() - 1);
+			message = "You have purchased: " + chosenItem.getName() + ". " + chosenItem.getPurchaseMessage();
+		}
+		
+		return message;
+	}
 }
