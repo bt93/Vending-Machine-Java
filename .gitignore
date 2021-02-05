@@ -48,3 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Remove log and reports
+Log
+reports/

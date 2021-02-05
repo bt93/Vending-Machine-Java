@@ -134,6 +134,9 @@ public class VendingMachine {
 		return message;
 	}
 	
+	/*
+	 * Ends transaction and gives user back their change
+	 */
 	public int[] finishTransaction() throws IOException {
 		double originalBalance = this.balance;
 		double currentBalance = this.balance;
@@ -154,6 +157,9 @@ public class VendingMachine {
 		return change;
 	}
 	
+	/*
+	 * Creates or appends to a log file that give transaction info
+	 */
 	private void appendLog(String transactionType, double amount) throws IOException {
 		DecimalFormat formatter = new DecimalFormat("#.00");
 		File log = new File("./Log.txt");
@@ -175,6 +181,34 @@ public class VendingMachine {
 			printWriter.println(timestampNow + " " + transactionType + ": $" + formatter.format(amount) + " $" + formatter.format(this.balance));
 		}
 		
+		printWriter.close();
+	}
+	
+	/*
+	 * Creates a new sales report when the program is ended showing the total sales and the amount 
+	 */
+	public void salesReport() throws IOException {
+		DecimalFormat formatter = new DecimalFormat("#.00");
+		Timestamp timestampNow = Timestamp.valueOf(LocalDateTime.now());
+		File newReport = new File("./reports/Sales-Report-" + timestampNow.getYear() + "-" + timestampNow.getMonth() + "-" + timestampNow.getDate() + "_" + 
+				timestampNow.getHours() + "-" + timestampNow.getMinutes() +".txt");
+		newReport.createNewFile();
+		FileWriter fileWriter = new FileWriter(newReport, false);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		PrintWriter printWriter = new PrintWriter(bufferedWriter);
+		double totalAmount = 0;
+		
+		printWriter.println("Sales Report, Date: " + timestampNow);
+		printWriter.println();
+		
+		for (Map.Entry<String, Item> item : this.items.entrySet()) {
+			int totalSold = 5 - item.getValue().getQuantity();
+			totalAmount += item.getValue().getPrice() * totalSold;
+			printWriter.println(item.getValue().getName() + " | " + totalSold);
+		}
+		
+		printWriter.println();
+		printWriter.println("Total Sales: " + formatter.format(totalAmount));
 		printWriter.close();
 	}
 }
